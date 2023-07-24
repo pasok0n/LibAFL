@@ -51,7 +51,7 @@ Alternatively you can run `cargo make run` and this command will automatically b
 
 ## Run
 
-The first time you run the binary, the broker will open a tcp port (currently on port `1337`), waiting for fuzzer clients to connect. This port is local and only used for the initial handshake. All further communication happens via shared map, to be independent of the kernel. Currently, you must run the clients from the libfuzzer_libxml2 directory for them to be able to access the PNG corpus.
+The first time you run the binary, the broker will open a tcp port (currently on port `1337`), waiting for fuzzer clients to connect. This port is local and only used for the initial handshake. All further communication happens via shared map, to be independent of the kernel. Currently, you must run the clients from the libfuzzer_libxml2 directory for them to be able to access the corpus.
 
 ```
 ./fuzzer_libxml2

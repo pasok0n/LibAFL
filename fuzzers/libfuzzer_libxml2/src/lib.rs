@@ -1,5 +1,5 @@
 //! A libfuzzer-like fuzzer with llmp-multithreading support and restarts
-//! The example harness is built for libpng.
+//! The example harness is built for libxml2.
 use mimalloc::MiMalloc;
 #[global_allocator]
 static GLOBAL: MiMalloc = MiMalloc;
@@ -186,18 +186,7 @@ fn fuzz(corpus_dirs: &[PathBuf], objective_dir: PathBuf, broker_port: u16) -> Re
         println!("We imported {} inputs from disk.", state.corpus().count());
     }
 
-    // This fuzzer restarts after 1 mio `fuzz_one` executions.
-    // Each fuzz_one will internally do many executions of the target.
-    // If your target is very instable, setting a low count here may help.
-    // However, you will lose a lot of performance that way.
-    let iters = 1_000_000;
-    fuzzer.fuzz_loop_for(
-        &mut stages,
-        &mut executor,
-        &mut state,
-        &mut restarting_mgr,
-        iters,
-    )?;
+    fuzzer.fuzz_loop(&mut stages, &mut executor, &mut state, &mut restarting_mgr)?;
 
     // It's important, that we store the state before restarting!
     // Else, the parent will not respawn a new child and quit.
